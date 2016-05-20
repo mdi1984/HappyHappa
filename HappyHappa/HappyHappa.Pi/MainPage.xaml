@@ -9,8 +9,30 @@
 
   <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-      <TextBlock Text="{Binding TestStr}" />
       <TextBlock Text="Heyho" />
+      <TextBlock>
+        <Run Text="Command Rec. State: "/>
+        <Run Text="{Binding CmdRecognizerState}" />
+      </TextBlock>
+
+      <TextBlock>
+        <Run Text="Item Rec. State: "/>
+        <Run Text="{Binding ItemRecognizerState}" />
+      </TextBlock>
+
+      <TextBlock>
+        <Run Text="Item understood: "/>
+        <Run Text="{Binding ItemUnderstood}" />
+      </TextBlock>
+
+      <TextBlock>
+        <Run Text="Expirationdate understood: "/>
+        <Run Text="{Binding DateUnderstood}" />
+      </TextBlock>
+      <TextBlock>
+        <Run Text="Debug Message: "/>
+        <Run Text="{Binding DebugMessage}" />
+      </TextBlock>
     </StackPanel>
   </Grid>
 </Page>
