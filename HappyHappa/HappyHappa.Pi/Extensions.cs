@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace HappyHappa.Pi
 {
@@ -20,6 +21,19 @@ namespace HappyHappa.Pi
       T[] result = new T[length];
       Array.Copy(data, index, result, 0, length);
       return result;
+    }
+
+    public static string ToCharactersOnlyString(this string str)
+    {
+      StringBuilder sb = new StringBuilder();
+      foreach (char c in str)
+      {
+        if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'))
+        {
+          sb.Append(c);
+        }
+      }
+      return sb.ToString();
     }
   }
 }

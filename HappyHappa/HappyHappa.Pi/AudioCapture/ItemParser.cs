@@ -34,6 +34,8 @@ namespace HappyHappa.Pi.AudioCapture
       var nameStart = string.IsNullOrEmpty(unit) ? 1 : 2;
 
       var name = string.Join(" ", parts.SubArray(nameStart, parts.Length - nameStart));
+      name = name.ToCharactersOnlyString();
+
       item = new SimpleItem
       {
         ItemName = name,
