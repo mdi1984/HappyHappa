@@ -10,7 +10,25 @@ namespace HappyHappa.RestClient
 {
   public class RestManagerBase
   {
-    public async Task<object> PutWithJsonPayload(string url, object payload)
+    public async Task<RestResponse> DeleteWithJsonPayload(string url, object payload)
+    {
+      using (var client = new HttpClient())
+      {
+        var jsonPayload = JsonConvert.SerializeObject(payload);
+        var request = new HttpRequestMessage
+        {
+          Content = new StringContent(jsonPayload, Encoding.UTF8, "application/json"),
+          Method = HttpMethod.Delete,
+          RequestUri = new Uri(url)
+        };
+
+        var responseMessage = await client.SendAsync(request);
+
+        return new RestResponse(responseMessage);
+      }
+    }
+
+    public async Task<RestResponse> PutWithJsonPayload(string url, object payload)
     {
       using (var client = new HttpClient())
       {
@@ -22,7 +40,23 @@ namespace HappyHappa.RestClient
              Encoding.UTF8,
              "application/json"));
 
-        return responseMessage;
+        return new RestResponse(responseMessage);
+      }
+    }
+
+    public async Task<RestResponse> PostWithJsonPayload(string url, object payload)
+    {
+      using (var client = new HttpClient())
+      {
+        var jsonPayload = JsonConvert.SerializeObject(payload);
+        var responseMessage = await client.PostAsync(
+         url,
+         new StringContent(
+             jsonPayload.ToString(),
+             Encoding.UTF8,
+             "application/json"));
+
+        return new RestResponse(responseMessage);
       }
     }
   }

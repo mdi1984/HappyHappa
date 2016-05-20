@@ -138,4 +138,7 @@
   <data name="NotUnderstood" xml:space="preserve">
     <value>Nicht verstanden</value>
   </data>
+  <data name="RemoveItemsCommand" xml:space="preserve">
+    <value>Entfernen</value>
+  </data>
 </root>

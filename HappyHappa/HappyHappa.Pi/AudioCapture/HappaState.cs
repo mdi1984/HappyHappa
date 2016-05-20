@@ -11,7 +11,8 @@ namespace HappyHappa.Pi.AudioCapture
     Initializing,
     WaitingForHeyHappa,
     WaitingForCommand,
-    WaitingForItem,
-    WaitingForExpirationDate
+    WaitingForExpirationDate,
+    WaitingForItemCreation,
+    WaitingForItemDeletion
   };
 }

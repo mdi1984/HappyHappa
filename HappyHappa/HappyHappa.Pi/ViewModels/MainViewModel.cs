@@ -62,13 +62,28 @@ namespace HappyHappa.Pi.ViewModels
     }
 
     public SimpleItem LastItem { get; set; }
+    public SimpleItem LastItemToRemove { get; set; }
 
-    public async Task CommitLastItem()
+    public async Task SaveLastItem()
     {
       this.LastItem.FridgeId = this.dbgFridgeId;
       await this.SendItemAsync(this.LastItem);
       this.Items.Add(this.LastItem);
       this.LastItem = null;
+    }
+
+    public async Task RemoveLastItem()
+    {
+      this.LastItemToRemove.FridgeId = this.dbgFridgeId;
+      await this.SendItemDeletionAsync(this.LastItemToRemove);
+      this.LastItemToRemove = null;
+    }
+
+    private async Task SendItemDeletionAsync(SimpleItem item)
+    {
+      var url = "http://localhost:5039/api/item/";
+      var restManager = new RestManagerBase();
+      var result = await restManager.DeleteWithJsonPayload(url, item);
     }
 
     private async Task SendItemAsync(SimpleItem item)
