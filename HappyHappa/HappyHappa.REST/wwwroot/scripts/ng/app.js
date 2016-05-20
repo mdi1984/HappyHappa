@@ -1,4 +1,4 @@
-﻿var app = angular.module("happyhappa", ["ui.router"]);
+﻿var app = angular.module("happyhappa", ["ui.router", "ngResource"]);
 
 app.config(function ($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise('/home');
@@ -22,7 +22,8 @@ app.config(function ($stateProvider, $urlRouterProvider) {
       })
       .state('settings', {
         url: '/settings',
-        templateUrl: 'scripts/ng/settings/settings.html'
+        templateUrl: 'scripts/ng/settings/settings.html',
+        controller: 'settingsCtrl',
       })
 
 });

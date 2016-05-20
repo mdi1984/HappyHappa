@@ -158,6 +158,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Web.config" />
+    <Content Include="wwwroot\scripts\lib\angular-resource.min.js" />
     <Content Include="wwwroot\scripts\lib\angular-route.min.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -176,6 +177,8 @@
     <Content Include="wwwroot\scripts\ng\intellicook\intellicook.html" />
     <Content Include="wwwroot\scripts\ng\recipes\recipes.html" />
     <Content Include="wwwroot\scripts\ng\settings\settings.html" />
+    <Content Include="wwwroot\scripts\ng\settings\settingsCtrl.js" />
+    <Content Include="wwwroot\scripts\ng\svc\happyhappaSvc.js" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\NinjectConfig.cs" />
