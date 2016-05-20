@@ -33,10 +33,10 @@ namespace HappyHappa.Pi.AudioCapture
       amount = string.IsNullOrEmpty(unit) ? amount : ModifyAmountBasedOnUnit(amount, unit);
       var nameStart = string.IsNullOrEmpty(unit) ? 1 : 2;
 
-      var name = string.Join(" ", parts.SubArray(nameStart, parts.Length - 1));
+      var name = string.Join(" ", parts.SubArray(nameStart, parts.Length - nameStart));
       item = new SimpleItem
       {
-        Name = name,
+        ItemName = name,
         Amount = amount
       };
       return true;

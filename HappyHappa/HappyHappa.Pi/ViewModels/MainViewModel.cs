@@ -6,11 +6,14 @@ using System.Text;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
 using HappyHappa.Pi.Model;
+using HappyHappa.RestClient;
 
 namespace HappyHappa.Pi.ViewModels
 {
   public class MainViewModel : ViewModelBase
   {
+    private readonly string dbgFridgeId = "573f7947fe6d091738c6cceb";
+
     public MainViewModel()
     {
       this.Items = new ObservableCollection<SimpleItem>();
@@ -60,10 +63,19 @@ namespace HappyHappa.Pi.ViewModels
 
     public SimpleItem LastItem { get; set; }
 
-    public void CommitLastItem()
+    public async Task CommitLastItem()
     {
+      this.LastItem.FridgeId = this.dbgFridgeId;
+      await this.SendItemAsync(this.LastItem);
       this.Items.Add(this.LastItem);
       this.LastItem = null;
+    }
+
+    private async Task SendItemAsync(SimpleItem item)
+    {
+      var url = "http://localhost:5039/api/item/";
+      var restManager = new RestManagerBase();
+      var result = await restManager.PostWithJsonPayload(url, item);
     }
   }
 }

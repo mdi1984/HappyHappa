@@ -8,8 +8,9 @@ namespace HappyHappa.Pi.Model
 {
   public class SimpleItem
   {
-    public string Name { get; set; }
+    public string FridgeId { get; set; }
+    public string ItemName { get; set; }
     public int Amount { get; set; }
-    public DateTime ExpirationDate { get; set; }
+    public DateTime? ExpirationDate { get; set; }
   }
 }

@@ -137,7 +137,12 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\HappyHappa.RestClient\HappyHappa.RestClient.csproj">
+      <Project>{6c02ffdb-6041-4d38-9670-045c64d0821f}</Project>
+      <Name>HappyHappa.RestClient</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
