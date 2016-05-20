@@ -10,6 +10,7 @@ using HappyHappa.REST.App_Start;
 using Microsoft.Owin.StaticFiles;
 using Microsoft.Owin;
 using Microsoft.Owin.FileSystems;
+using Microsoft.Owin.Extensions;
 
 namespace HappyHappa.REST
 {
@@ -22,14 +23,21 @@ namespace HappyHappa.REST
       app.UseNinjectMiddleware(() => NinjectConfig.CreateKernel.Value);
       app.UseNinjectWebApi(config);
 
+      WebApiConfig.Register(config);
+
+      //DefaultFilesOptions options = new DefaultFilesOptions();
+      //options.DefaultFileNames.Clear();
+      //options.DefaultFileNames.Add("index.html");
+      //app.UseDefaultFiles(options);
+
       app.UseFileServer(new FileServerOptions
       {
-        RequestPath = new PathString(string.Empty),
-        FileSystem = new PhysicalFileSystem("./wwwroot"),
-        EnableDirectoryBrowsing = false
+        RequestPath = new PathString(""),
+        FileSystem = new PhysicalFileSystem("wwwroot"),
+        EnableDirectoryBrowsing = true
       });
 
-      WebApiConfig.Register(config);
+      app.UseStageMarker(PipelineStage.MapHandler);
     }
   }
 }

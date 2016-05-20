@@ -1,10 +1,37 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/css/general.css" />
+    <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    <title>Happy Happa</title>
 	<meta charset="utf-8" />
 </head>
-<body>
+<body data-ng-app="happyhappa">
+  <nav class="navbar navbar-default navbar-static-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" ui-sref="home">
+          HappyHappa
+        </a>
+      </div>
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li ui-sref-active="active" ><a ui-sref="intellicook">What to cook?</a></li>
+          <li ui-sref-active="active" ><a ui-sref="recipes">Recipes</a></li>
+          <li ui-sref-active="active" ><a ui-sref="fridge">Fridge</a></li>
+          <li ui-sref-active="active" ><a ui-sref="settings">Settings</a></li>
+        </ul>
+      </div><!-- /.navbar-collapse -->
+  </nav>
 
+  <div class="container-fluid" data-ui-view></div>
+
+  <script type="text/javascript" src="scripts/lib/jquery-2.2.4.min.js"></script>
+  <script type="text/javascript" src="scripts/lib/angular.min.js"></script>
+  <script type="text/javascript" src="scripts/lib/angular-ui-router.min.js"></script>
+  <script type="text/javascript" src="scripts/lib/bootstrap.min.js"></script>
+
+  <script type="text/javascript" src="scripts/ng/app.js"></script>
 </body>
 </html>
