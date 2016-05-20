@@ -1,4 +1,5 @@
 ﻿using HappyHappa.REST.DAL.Model;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace HappyHappa.REST.DAL
@@ -12,5 +13,7 @@ namespace HappyHappa.REST.DAL
 
     Task<User> GetUser();
     Task<User> SetUser(User user);
+
+    Task<IEnumerable<Item>> GetItems(string fridgeId);
   }
 }

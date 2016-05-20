@@ -133,5 +133,11 @@ namespace HappyHappa.REST.DAL
 
       return u;
     }
+
+    public async Task<IEnumerable<Item>> GetItems(string fridgeId)
+    {
+      Fridge fridge = await RetrieveFridge(fridgeId);
+      return fridge.Items;
+    }
   }
 }

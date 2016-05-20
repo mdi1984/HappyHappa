@@ -1,5 +1,6 @@
 ﻿using HappyHappa.REST.DAL;
 using HappyHappa.REST.DAL.Model;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Http;
 
@@ -9,17 +10,10 @@ namespace HappyHappa.REST.Controllers
   {
     public ItemController(IDAL dal) : base(dal) { }
 
-    //// GET api/<controller>
-    //public IEnumerable<string> Get()
-    //{
-    //  return new string[] { "value1", "value2" };
-    //}
-
-    //// GET api/<controller>/eggs
-    //public string Get(string name)
-    //{
-    //  return "value";
-    //}
+    public async Task<IEnumerable<Item>> Get(string id)
+    {
+      return await Dal.GetItems(id);
+    }
 
     // PUT api/<controller>
     public async Task<Item> Put([FromBody] BoughtItem item)
