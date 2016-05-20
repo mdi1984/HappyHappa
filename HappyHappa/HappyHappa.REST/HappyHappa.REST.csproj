@@ -98,6 +98,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="DAL\Model\Fridge.cs" />
+    <Compile Include="DAL\Model\Item.cs" />
+    <Compile Include="DAL\Model\Product.cs" />
+    <Compile Include="DAL\Model\Recipe.cs" />
+    <Compile Include="DAL\Model\User.cs" />
+    <Compile Include="DAL\Model\Device.cs" />
+    <Compile Include="DAL\Model\BoughtItem.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
