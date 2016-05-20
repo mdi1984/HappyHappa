@@ -9,5 +9,8 @@ namespace HappyHappa.REST.DAL
     Task<Model.Item> TakeItem(BoughtItem item);
 
     Task<string> CreateFridge(Device device);
+
+    Task<User> GetUser();
+    Task<User> SetUser(User user);
   }
 }

@@ -8,7 +8,6 @@ namespace HappyHappa.REST.DAL.Model
 {
   public class User : Entity
   {
-    public int Id { get; set; }
-    public Fridge Fridge { get; set; }
+    public string FridgeSecret { get; set; }
   }
 }

@@ -108,5 +108,30 @@ namespace HappyHappa.REST.DAL
       if (!fridgeResponse.Success) throw new Exception("Fridge registration unsuccessful");
       return fridgeResponse.Data.Id;
     }
+
+    public async Task<User> GetUser()
+    {
+      var response = await repo.SingleAsync<User>(user => true);
+      if (!response.Success)
+      {
+        await repo.AddAsync(new User
+        {
+          FridgeSecret = null
+        });
+        response = await repo.SingleAsync<User>(user => true);
+      }
+      return response.Data;
+    }
+
+    public async Task<User> SetUser(User user)
+    {
+      User u = await GetUser();
+      u.FridgeSecret = user.FridgeSecret;
+
+      var response = await repo.UpdateAsync(u);
+      if (!response.Success) throw new Exception("Updating User Setting failed");
+
+      return u;
+    }
   }
 }
