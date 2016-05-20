@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System.Net;
+using System.Net.Http;
 
 namespace HappyHappa.RestClient
 {
@@ -6,11 +7,11 @@ namespace HappyHappa.RestClient
   {
     public RestResponse(HttpResponseMessage response)
     {
-      this.StatusCode = int.Parse(response.StatusCode.ToString());
+      this.StatusCode = response.StatusCode;
       this.Message = response.ToString();
     }
 
-    public int StatusCode { get; set; }
+    public HttpStatusCode StatusCode { get; set; }
     public string Message { get; set; }
   }
 }

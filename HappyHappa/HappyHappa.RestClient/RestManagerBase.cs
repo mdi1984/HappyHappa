@@ -43,5 +43,21 @@ namespace HappyHappa.RestClient
         return new RestResponse(responseMessage);
       }
     }
+
+    public async Task<RestResponse> PostWithJsonPayload(string url, object payload)
+    {
+      using (var client = new HttpClient())
+      {
+        var jsonPayload = JsonConvert.SerializeObject(payload);
+        var responseMessage = await client.PostAsync(
+         url,
+         new StringContent(
+             jsonPayload.ToString(),
+             Encoding.UTF8,
+             "application/json"));
+
+        return new RestResponse(responseMessage);
+      }
+    }
   }
 }
