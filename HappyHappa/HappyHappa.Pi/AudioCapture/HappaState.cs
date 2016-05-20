@@ -8,6 +8,7 @@ namespace HappyHappa.Pi.AudioCapture
 {
   public enum HappaState
   {
+    Initializing,
     WaitingForHeyHappa,
     WaitingForCommand,
     WaitingForItem,

@@ -10,7 +10,7 @@ namespace HappyHappa.RestClient
 {
   public class RestManagerBase
   {
-    public async Task<object> PostWithJsonPayload(string url, object payload)
+    public async Task<object> PutWithJsonPayload(string url, object payload)
     {
       using (var client = new HttpClient())
       {

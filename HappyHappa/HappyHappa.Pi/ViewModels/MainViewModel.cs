@@ -75,7 +75,7 @@ namespace HappyHappa.Pi.ViewModels
     {
       var url = "http://localhost:5039/api/item/";
       var restManager = new RestManagerBase();
-      var result = await restManager.PostWithJsonPayload(url, item);
+      var result = await restManager.PutWithJsonPayload(url, item);
     }
   }
 }

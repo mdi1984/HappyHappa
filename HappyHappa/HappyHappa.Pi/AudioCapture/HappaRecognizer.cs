@@ -34,14 +34,22 @@ namespace HappyHappa.Pi.AudioCapture
       this.commandMap = ResourceManager.Current.MainResourceMap.GetSubtree("Commands");
     }
 
-    public HappaState AppState { get; set; }
+    //public HappaState AppState { get; set; }
+    private HappaState appState;
+
+    public HappaState AppState
+    {
+      get { return appState; }
+      set { appState = value; }
+    }
+
 
 
     public async Task Initialize()
     {
       this.dispatcher = CoreWindow.GetForCurrentThread().Dispatcher;
       this.SetDebugMessage("HappaRecognizer Initialize");
-
+      this.AppState = HappaState.Initializing;
       var permissionGained = await AudioCapturePermissions.RequestMicrophonePermission();
       if (permissionGained)
       {
@@ -276,6 +284,7 @@ namespace HappyHappa.Pi.AudioCapture
       }
     }
 
+    // TODO: Obsolete ? 
     private async Task SwitchToCommandRecognition()
     {
       try
@@ -336,6 +345,15 @@ namespace HappyHappa.Pi.AudioCapture
       {
         this.vm.ItemRecognizerState = args.State.ToString();
       });
+
+      if (args.State == SpeechRecognizerState.Idle && (this.AppState == HappaState.WaitingForItem || this.AppState == HappaState.WaitingForExpirationDate))
+      {
+        var prevState = this.AppState;
+        this.AppState = HappaState.Initializing;
+        await this.InitializeItemRecognizer();
+        await this.itemRecognizer.ContinuousRecognitionSession.StartAsync();
+        this.AppState = prevState;
+      }
     }
 
     private async void SetDebugMessage(string msg)
