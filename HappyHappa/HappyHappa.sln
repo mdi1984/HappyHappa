@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Service", "Service", "{36DF8050-9D61-47FA-A852-08079EB0211B}"
 EndProject
@@ -12,6 +12,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HappyHappa.Pi", "HappyHappa.Pi\HappyHappa.Pi.csproj", "{28F7FEB2-9D2D-467D-8117-2A02A5F8324B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HappyHappa.REST", "HappyHappa.REST\HappyHappa.REST.csproj", "{84116C3A-CBC4-467C-B2BF-230B808FF640}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HappyHappa.Data.MongoDb", "HappyHappa.Data.MongoDb\HappyHappa.Data.MongoDb.csproj", "{35EC128F-CBA8-42EF-980E-78FCBED13EC3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -61,6 +63,22 @@ Global
 		{84116C3A-CBC4-467C-B2BF-230B808FF640}.Release|x64.Build.0 = Release|Any CPU
 		{84116C3A-CBC4-467C-B2BF-230B808FF640}.Release|x86.ActiveCfg = Release|Any CPU
 		{84116C3A-CBC4-467C-B2BF-230B808FF640}.Release|x86.Build.0 = Release|Any CPU
+		{35EC128F-CBA8-42EF-980E-78FCBED13EC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35EC128F-CBA8-42EF-980E-78FCBED13EC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35EC128F-CBA8-42EF-980E-78FCBED13EC3}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{35EC128F-CBA8-42EF-980E-78FCBED13EC3}.Debug|ARM.Build.0 = Debug|Any CPU
+		{35EC128F-CBA8-42EF-980E-78FCBED13EC3}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{35EC128F-CBA8-42EF-980E-78FCBED13EC3}.Debug|x64.Build.0 = Debug|Any CPU
+		{35EC128F-CBA8-42EF-980E-78FCBED13EC3}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{35EC128F-CBA8-42EF-980E-78FCBED13EC3}.Debug|x86.Build.0 = Debug|Any CPU
+		{35EC128F-CBA8-42EF-980E-78FCBED13EC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35EC128F-CBA8-42EF-980E-78FCBED13EC3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35EC128F-CBA8-42EF-980E-78FCBED13EC3}.Release|ARM.ActiveCfg = Release|Any CPU
+		{35EC128F-CBA8-42EF-980E-78FCBED13EC3}.Release|ARM.Build.0 = Release|Any CPU
+		{35EC128F-CBA8-42EF-980E-78FCBED13EC3}.Release|x64.ActiveCfg = Release|Any CPU
+		{35EC128F-CBA8-42EF-980E-78FCBED13EC3}.Release|x64.Build.0 = Release|Any CPU
+		{35EC128F-CBA8-42EF-980E-78FCBED13EC3}.Release|x86.ActiveCfg = Release|Any CPU
+		{35EC128F-CBA8-42EF-980E-78FCBED13EC3}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -68,5 +86,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{28F7FEB2-9D2D-467D-8117-2A02A5F8324B} = {1C6CD6E0-C58B-4C05-91E9-B91D146A3793}
 		{84116C3A-CBC4-467C-B2BF-230B808FF640} = {36DF8050-9D61-47FA-A852-08079EB0211B}
+		{35EC128F-CBA8-42EF-980E-78FCBED13EC3} = {36DF8050-9D61-47FA-A852-08079EB0211B}
 	EndGlobalSection
 EndGlobal
