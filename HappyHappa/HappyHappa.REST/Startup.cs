@@ -7,6 +7,9 @@ using System.Web.Http;
 using Ninject.Web.Common.OwinHost;
 using Ninject.Web.WebApi.OwinHost;
 using HappyHappa.REST.App_Start;
+using Microsoft.Owin.StaticFiles;
+using Microsoft.Owin;
+using Microsoft.Owin.FileSystems;
 
 namespace HappyHappa.REST
 {
@@ -18,6 +21,13 @@ namespace HappyHappa.REST
 
       app.UseNinjectMiddleware(() => NinjectConfig.CreateKernel.Value);
       app.UseNinjectWebApi(config);
+
+      app.UseFileServer(new FileServerOptions
+      {
+        RequestPath = new PathString(string.Empty),
+        FileSystem = new PhysicalFileSystem("./wwwroot"),
+        EnableDirectoryBrowsing = false
+      });
 
       WebApiConfig.Register(config);
     }
