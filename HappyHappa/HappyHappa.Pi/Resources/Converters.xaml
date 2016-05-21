@@ -4,4 +4,5 @@
     xmlns:c="using:HappyHappa.Pi.Converters">
   <c:EqualsToVisibilityConverter x:Key="EqualsToVisibilityConverter" />
   <c:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
+  <c:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
 </ResourceDictionary>

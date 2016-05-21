@@ -323,21 +323,6 @@ namespace HappyHappa.Pi.AudioCapture
       }
     }
 
-    // TODO: Obsolete ? 
-    private async Task SwitchToCommandRecognition()
-    {
-      try
-      {
-        this.UpdateAppState(HappaState.WaitingForCommand);
-        await this.itemRecognizer.ContinuousRecognitionSession.StopAsync();
-        await this.cmdRecognizer.ContinuousRecognitionSession.StartAsync();
-      }
-      catch (Exception ex)
-      {
-        this.SetDebugMessage(ex.Message);
-      }
-    }
-
     private async Task SwitchToIdleMode()
     {
       try

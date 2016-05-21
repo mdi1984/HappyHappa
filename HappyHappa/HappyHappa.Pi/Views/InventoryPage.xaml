@@ -11,6 +11,7 @@
       <RowDefinition Height="Auto" />
       <RowDefinition Height="Auto" />
       <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
       <RowDefinition Height="*" />
       <RowDefinition Height="Auto" />
       <RowDefinition Height="Auto" />
@@ -61,14 +62,18 @@
       </StackPanel>
     </Grid>
 
-    <TextBlock Grid.Row="4" Visibility="{Binding LastSavedItem, Converter={StaticResource NullToVisibilityConverter}}"> 
+    <Grid Grid.Row="4" Visibility="{Binding BaconDetected, Converter={StaticResource BoolToVisibilityConverter}}">
+      <Image Source="ms-appx:///Assets/homer_bacon.jpg" />
+    </Grid>
+
+    <TextBlock Grid.Row="5" Visibility="{Binding LastSavedItem, Converter={StaticResource NullToVisibilityConverter}}"> 
       <Run Text="Zuletzt gespeichert:" />
       <Run Text="{Binding LastSavedItem.Amount}" />
       <Run Text="{Binding LastSavedItem.ItemName}" />
       <Run Text="{Binding LastSavedItem.ExpirationDate}" />
     </TextBlock>
 
-    <StackPanel Grid.Row="5">
+    <StackPanel Grid.Row="6">
       <TextBlock>
         <Run Text="Debug Info:" />
         <Run Text="{Binding DebugMessage}" />

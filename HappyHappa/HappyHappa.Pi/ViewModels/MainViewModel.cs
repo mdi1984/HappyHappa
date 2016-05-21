@@ -21,6 +21,15 @@ namespace HappyHappa.Pi.ViewModels
       this.InitializeStateOptions();
     }
 
+    private bool baconDetected;
+
+    public bool BaconDetected
+    {
+      get { return this.baconDetected; }
+      set { this.Set(ref baconDetected, value); }
+    }
+
+
     public string DeviceId { get { return App.ClientId; } }
 
     public ObservableCollection<SimpleItem> Items { get; set; }
@@ -70,7 +79,18 @@ namespace HappyHappa.Pi.ViewModels
     public string ItemUnderstood
     {
       get { return this.itemUnderstood; }
-      set { this.Set(ref itemUnderstood, value); }
+      set
+      {
+        this.Set(ref itemUnderstood, value);
+        if (value != null && value.Contains("Speck", StringComparison.OrdinalIgnoreCase))
+        {
+          this.BaconDetected = true;
+        }
+        else
+        {
+          this.BaconDetected = false;
+        }
+      }
     }
 
     private string dateUnderstood;
