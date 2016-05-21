@@ -10,8 +10,14 @@ app.config(function ($stateProvider, $urlRouterProvider) {
       })
       .state('recipes', {
         url: '/recipes',
-        templateUrl: 'scripts/ng/recipes/recipes.html'
+        templateUrl: 'scripts/ng/recipes/recipes.html',
+        controller: 'recipeCtrl'
       })
+    .state('recipesDetailed', {
+      url: '/recipes/:id',
+      templateUrl: 'scripts/ng/recipeDetail/recipeDetail.html',
+      controller: 'recipeDetailCtrl'
+    })
     .state('intellicook', {
       url: '/intellicook',
       templateUrl: 'scripts/ng/intellicook/intellicook.html'

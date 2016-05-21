@@ -1,3 +1,23 @@
 ﻿.navbar{
   margin-bottom: 0px !important;
 }
+
+.removeli{
+  list-style: none;
+}
+
+h2{
+  font-weight: bolder;
+}
+.bordered {
+  list-style-position:inside;
+  padding: 10px;
+  margin-right: 0;
+  margin-left: 0;
+  border: solid;
+  border-color: #ddd;
+  border-width: 1px;
+  border-radius: 4px 4px 0 0;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}

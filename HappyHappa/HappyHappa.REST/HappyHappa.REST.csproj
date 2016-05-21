@@ -177,6 +177,7 @@
     <Content Include="wwwroot\scripts\ng\home\home.html" />
     <Content Include="wwwroot\scripts\ng\intellicook\intellicook.html" />
     <Content Include="wwwroot\scripts\ng\recipes\recipes.html" />
+    <Content Include="wwwroot\scripts\ng\recipes\recipeCtrl.js" />
     <Content Include="wwwroot\scripts\ng\settings\settings.html" />
     <Content Include="wwwroot\scripts\ng\settings\settingsCtrl.js" />
     <Content Include="wwwroot\scripts\ng\svc\happyhappaSvc.js" />

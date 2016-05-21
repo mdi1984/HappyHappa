@@ -9,3 +9,7 @@ app.factory("hhUserSvc", ["$resource", function ($resource) {
     'update': { method: 'PUT' }
   });
 }]);
+
+app.factory("hhRecipeSvc", ["$resource", function ($resource) {
+  return $resource("/api/recipe/:id", { id: '@id' });
+}]);
