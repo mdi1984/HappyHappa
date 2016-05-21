@@ -58,7 +58,7 @@ namespace HappyHappa.Pi.ViewModels
         DeviceAddress = deviceInformation.Id.ToString()
       };
 
-      var registrationResult = await restManager.PostWithJsonPayload("http://localhost:5039/api/fridge/", req);
+      var registrationResult = await restManager.PostWithJsonPayload("http://happyhappa-uh.azurewebsites.net/api/fridge/", req);
       if (registrationResult.StatusCode != System.Net.HttpStatusCode.OK)
       {
         this.LoginMessage = "Unable to reach service";
