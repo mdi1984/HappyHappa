@@ -15,8 +15,7 @@
   </span>
 </div>
 <hr />
-<div class="description">
-  {{model.Description}}
+<div class="description" ng-bind-html="model.Description">
 </div>
 <div style="margin-top: 20px;">
   <input type="button" class="btn btn-primary" value="Cook!" ng-disabled="!enoughIngredients" data-ng-click="cook()" ui-sref="recipesDetailed(id)"/>

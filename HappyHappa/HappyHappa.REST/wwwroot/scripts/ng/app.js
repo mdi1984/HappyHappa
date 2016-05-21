@@ -1,4 +1,4 @@
-﻿var app = angular.module("happyhappa", ["ui.router", "ngResource", "ngStorage"]);
+﻿var app = angular.module("happyhappa", ["ui.router", "ngResource", "ngStorage", "ngSanitize"]);
 
 app.config(function ($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise('/home');
