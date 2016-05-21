@@ -149,7 +149,7 @@ namespace HappyHappa.Pi.AudioCapture
         this.itemRecognizer.StateChanged -= ItemRecognizerStateChanged;
 
         this.itemRecognizer.ContinuousRecognitionSession.Completed -= ContinuousRecognitionSession_Completed;
-        this.itemRecognizer.ContinuousRecognitionSession.ResultGenerated += OnItemRecognizerResult;
+        this.itemRecognizer.ContinuousRecognitionSession.ResultGenerated -= OnItemRecognizerResult;
 
         this.itemRecognizer.Dispose();
         this.itemRecognizer = null;

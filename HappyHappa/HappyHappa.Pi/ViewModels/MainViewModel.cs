@@ -21,7 +21,9 @@ namespace HappyHappa.Pi.ViewModels
       this.InitializeStateOptions();
     }
 
-  public ObservableCollection<SimpleItem> Items { get; set; }
+    public string DeviceId { get { return App.ClientId; } }
+
+    public ObservableCollection<SimpleItem> Items { get; set; }
 
     private ObservableCollection<string> availableCommands;
 
@@ -107,14 +109,14 @@ namespace HappyHappa.Pi.ViewModels
 
     private async Task SendItemDeletionAsync(SimpleItem item)
     {
-      var url = "http://localhost:5039/api/item/";
+      var url = "http://happyhappa-uh.azurewebsites.net/api/item/";
       var restManager = new RestManagerBase();
       var result = await restManager.DeleteWithJsonPayload(url, item);
     }
 
     private async Task SendItemAsync(SimpleItem item)
     {
-      var url = "http://localhost:5039/api/item/";
+      var url = "http://happyhappa-uh.azurewebsites.net/api/item/";
       var restManager = new RestManagerBase();
       var result = await restManager.PutWithJsonPayload(url, item);
       if (result.StatusCode == System.Net.HttpStatusCode.OK)

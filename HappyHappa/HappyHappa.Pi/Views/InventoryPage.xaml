@@ -17,6 +17,10 @@
     </Grid.RowDefinitions>
 
     <TextBlock Grid.Row="0" Text="Hey, Talk to me!" FontSize="36" HorizontalAlignment="Center" />
+    <TextBlock Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+      <Run Text="DeviceID:" />
+      <Run Text="{Binding DeviceId}" />
+    </TextBlock>
     <TextBlock Grid.Row="1" Text="Optionen:" />
     <ItemsControl Grid.Row="2" ItemsSource="{Binding AvailableCommands}" >
       <ItemsControl.ItemTemplate>
