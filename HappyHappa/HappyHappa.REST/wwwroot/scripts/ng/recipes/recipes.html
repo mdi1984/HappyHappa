@@ -5,8 +5,8 @@
     <div class="bordered">
       <h2><a ui-sref="recipesDetailed({id: recipe.Id})">{{recipe.Name}}</a></h2>
       <div class="ingredients">
-        <ul style="white-space: nowrap; padding-left: 0px;">
-          <li style="list-style: none;display:inline; margin: 2px 0px 2px 0px;" data-ng-repeat="ingredient in recipe.Ingredients">
+        <ul style="padding-left: 0px;">
+          <li style="list-style: none;display:inline; margin: 2px 2px 2px 2px;" data-ng-repeat="ingredient in recipe.Ingredients">
             <span style="font-size: 85% !important;" class="label label-default">{{ingredient.Amount}} {{ingredient.Name}}</span>
           </li>
         </ul>

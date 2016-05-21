@@ -10,12 +10,6 @@ app.factory("hhItemSvc", ["$resource", function ($resource) {
   });
 }]);
 
-app.factory("hhUserSvc", ["$resource", function ($resource) {
-  return $resource("/api/user", null, {
-    'update': { method: 'PUT' }
-  });
-}]);
-
 app.factory("hhRecipeSvc", ["$resource", function ($resource) {
   return $resource("/api/recipe/:id", { id: '@id' });
 }]);

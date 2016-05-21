@@ -2,8 +2,8 @@
 <img src="img/loading.gif" data-ng-hide="hideLoadingIcon" style=" display:block;margin:auto;" />
 <h2>{{model.Name}}</h2>
 <div class="ingredients">
-  <ul style="white-space: nowrap; padding-left: 0px;">
-    <li style="list-style: none;display:inline; margin: 2px 0px 2px 0px;" data-ng-repeat="ingredient in model.Ingredients">
+  <ul style="padding-left: 0px;">
+    <li style="list-style: none;display:inline; margin: 2px 2px 2px 2px;" data-ng-repeat="ingredient in model.Ingredients">
       <span style="font-size: 85% !important;" class="label" data-ng-class="{'label-success': isEnough(ingredient), 'label-danger': !isEnough(ingredient)}">{{ingredient.Amount}} {{ingredient.Name}}<span data-ng-show="!isEnough(ingredient)"> ({{difference(ingredient)}} missing)</span></span>
     </li>
   </ul>

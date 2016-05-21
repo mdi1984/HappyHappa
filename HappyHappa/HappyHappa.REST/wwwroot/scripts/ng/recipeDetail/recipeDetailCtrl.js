@@ -1,6 +1,6 @@
 ﻿var app = angular.module("happyhappa");
 
-app.controller("recipeDetailCtrl", ["$http", "$state", "$scope", "$stateParams", "hhRecipeSvc", "hhItemSvc", "hhUserSvc", function ($http, $state, $scope, $stateParams, hhRecipeSvc, hhItemSvc, hhUserSvc) {
+app.controller("recipeDetailCtrl", ["$http", "$state", "$scope", "$stateParams", "hhRecipeSvc", "hhItemSvc", "$localStorage", function ($http, $state, $scope, $stateParams, hhRecipeSvc, hhItemSvc, $localStorage) {
   $scope.model = {}
   $scope.items = []
   $scope.enoughIngredients = true;
@@ -13,18 +13,16 @@ app.controller("recipeDetailCtrl", ["$http", "$state", "$scope", "$stateParams",
     hhRecipeSvc.get({ id: $scope.id }, function (recipe) {
       $scope.model = recipe;
     });
-    hhUserSvc.get(function (setting) {
-      fridgeSecret = setting.FridgeSecret;
-      hhItemSvc.absGet({ id: setting.FridgeSecret, abs: true }, function (items) {
-        for (var i = 0; i < items.length; ++i) {
-          var item = items[i];
-          $scope.items[item.Name.toLowerCase()] = item.Products[0].Amount;
-        }
-        $scope.enoughIngredients = true;
-        $scope.hideLoadingIcon = true;
-      });
-    })
     
+    fridgeSecret = $localStorage.FridgeSecret;
+    hhItemSvc.absGet({ id: fridgeSecret, abs: true }, function (items) {
+      for (var i = 0; i < items.length; ++i) {
+        var item = items[i];
+        $scope.items[item.Name.toLowerCase()] = item.Products[0].Amount;
+      }
+      $scope.enoughIngredients = true;
+      $scope.hideLoadingIcon = true;
+    });
   }
 
   $scope.isEnough = function (ingredient) {
