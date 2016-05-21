@@ -172,6 +172,7 @@
     <Content Include="wwwroot\scripts\lib\jquery-2.2.4.min.js" />
     <Content Include="wwwroot\scripts\ng\app.js" />
     <Content Include="wwwroot\scripts\ng\fridge\fridge.html" />
+    <Content Include="wwwroot\scripts\ng\fridge\fridgeCtrl.js" />
     <Content Include="wwwroot\scripts\ng\general\navCtrl.js" />
     <Content Include="wwwroot\scripts\ng\home\home.html" />
     <Content Include="wwwroot\scripts\ng\intellicook\intellicook.html" />

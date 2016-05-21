@@ -18,12 +18,13 @@ app.config(function ($stateProvider, $urlRouterProvider) {
     })
       .state('fridge', {
         url: '/fridge',
-        templateUrl: 'scripts/ng/fridge/fridge.html'
+        templateUrl: 'scripts/ng/fridge/fridge.html',
+        controller: 'fridgeCtrl'
       })
       .state('settings', {
         url: '/settings',
         templateUrl: 'scripts/ng/settings/settings.html',
-        controller: 'settingsCtrl',
+        controller: 'settingsCtrl'
       })
 
 });
