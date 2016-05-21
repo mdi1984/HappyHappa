@@ -1,4 +1,5 @@
 ﻿<h1>Recipes</h1>
+<img src="img/loading.gif" data-ng-hide="hideLoadingIcon" style=" display:block;margin:auto;" />
 <ul style="padding-left: 0px">
   <li data-ng-repeat="recipe in model" class="removeli" style="margin-bottom: 5px;">
     <div class="bordered">
@@ -9,6 +10,12 @@
             <span style="font-size: 85% !important;" class="label label-default">{{ingredient.Amount}} {{ingredient.Name}}</span>
           </li>
         </ul>
+      </div>
+      <div style="margin-top: 5px;">
+        <span data-ng-repeat="i in [1, 2, 3, 4, 5]">
+          <img data-ng-show="recipe.Rating >= i" src="img/star-full.gif" style="width:20px;"/>
+          <img data-ng-show="recipe.Rating < i" src="img/star-empty.gif" style="width:20px;" />
+        </span>
       </div>
       <hr/>
       <div class="description">

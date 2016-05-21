@@ -154,6 +154,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="wwwroot\css\general.css" />
+    <Content Include="wwwroot\img\loading.gif" />
+    <Content Include="wwwroot\img\star-empty.gif" />
+    <Content Include="wwwroot\img\star-full.gif" />
     <Content Include="wwwroot\index.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -175,6 +178,7 @@
     <Content Include="wwwroot\scripts\ng\fridge\fridgeCtrl.js" />
     <Content Include="wwwroot\scripts\ng\general\navCtrl.js" />
     <Content Include="wwwroot\scripts\ng\home\home.html" />
+    <Content Include="wwwroot\scripts\ng\intellicook\intellicookCtrl.js" />
     <Content Include="wwwroot\scripts\ng\intellicook\intellicook.html" />
     <Content Include="wwwroot\scripts\ng\recipeDetail\recipeDetailCtrl.js" />
     <Content Include="wwwroot\scripts\ng\recipeDetail\recipeDetail.html" />
@@ -189,11 +193,13 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AbstractController.cs" />
     <Compile Include="Controllers\FridgeController.cs" />
+    <Compile Include="Controllers\IntelliCookController.cs" />
     <Compile Include="Controllers\ItemController.cs" />
     <Compile Include="Controllers\RecipeController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="DAL\DAL.cs" />
     <Compile Include="DAL\DummyContext.cs" />
+    <Compile Include="DAL\Model\EvaluatedRecipe.cs" />
     <Compile Include="DAL\Model\Fridge.cs" />
     <Compile Include="DAL\Model\Ingredient.cs" />
     <Compile Include="DAL\Model\Item.cs" />
@@ -211,6 +217,7 @@
   <ItemGroup>
     <Content Include="packages.config" />
     <Content Include="connectionStrings.config" />
+    <None Include="Properties\PublishProfiles\happyhappa-uh.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -20,17 +20,18 @@ app.config(function ($stateProvider, $urlRouterProvider) {
     })
     .state('intellicook', {
       url: '/intellicook',
-      templateUrl: 'scripts/ng/intellicook/intellicook.html'
+      templateUrl: 'scripts/ng/intellicook/intellicook.html',
+      controller: 'intellicookCtrl'
     })
-      .state('fridge', {
-        url: '/fridge',
-        templateUrl: 'scripts/ng/fridge/fridge.html',
-        controller: 'fridgeCtrl'
-      })
-      .state('settings', {
-        url: '/settings',
-        templateUrl: 'scripts/ng/settings/settings.html',
-        controller: 'settingsCtrl'
-      })
+    .state('fridge', {
+      url: '/fridge',
+      templateUrl: 'scripts/ng/fridge/fridge.html',
+      controller: 'fridgeCtrl'
+    })
+    .state('settings', {
+      url: '/settings',
+      templateUrl: 'scripts/ng/settings/settings.html',
+      controller: 'settingsCtrl'
+    })
 
 });
