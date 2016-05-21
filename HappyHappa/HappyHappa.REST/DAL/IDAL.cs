@@ -8,6 +8,7 @@ namespace HappyHappa.REST.DAL
   {
     Task<Model.Item> PutItem(BoughtItem item);
     Task<Model.Item> TakeItem(BoughtItem item);
+    Task<IEnumerable<Model.Item>> TakeItems(IEnumerable<BoughtItem> items);
 
     Task<string> CreateFridge(Device device);
 

@@ -27,9 +27,9 @@ namespace HappyHappa.REST.Controllers
     }
 
     // DELETE api/<controller>
-    public async Task<Item> Delete([FromBody] BoughtItem item)
+    public async Task<IEnumerable<Item>> Delete([FromBody] IEnumerable<BoughtItem> item)
     {
-      return await Dal.TakeItem(item);
+      return await Dal.TakeItems(item);
     }
   }
 }

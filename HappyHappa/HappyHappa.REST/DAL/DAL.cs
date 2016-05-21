@@ -9,6 +9,7 @@ namespace HappyHappa.REST.DAL
 {
   public class DAL : IDAL
   {
+    private static object synchronizationToken;
     private IContext ctx;
     public IRepository repo { get; set; }
 
@@ -46,11 +47,54 @@ namespace HappyHappa.REST.DAL
       return updateRequest.Success ? item : null;
     }
 
+    public async Task<IEnumerable<Item>> TakeItems(IEnumerable<BoughtItem> items)
+    {
+      Fridge fridge = await RetrieveFridge(items.First().FridgeId);
+      foreach(BoughtItem item in items)
+      {
+        Model.Item persistedItem = fridge.Items.FirstOrDefault(val => val.Name.ToLower() == item.ItemName.ToLower());
+
+        //item not present.
+        if (persistedItem == null) throw new Exception($"There is no {item.ItemName} in your fridge");
+
+        //not enough items present
+        if (item.Amount > persistedItem.GetTotalAmount()) throw new Exception($"Not enough {item.ItemName} present");
+
+        int neededItems = item.Amount;
+        //take items
+        var products = persistedItem.Products.OrderBy(product => product.ExpirationDate).ThenBy(product => product.ExpirationDate == null);
+        foreach (Product product in products.TakeWhile(product => neededItems >= 0))
+        {
+          int residue = product.Amount - neededItems;
+          //delete entry
+          if (residue <= 0)
+          {
+            (persistedItem.Products as IList<Product>).Remove(product);
+            neededItems = Math.Abs(residue);
+          }
+          //change entry
+          else
+          {
+            product.Amount = residue;
+            neededItems = 0;
+          }
+        }
+
+        if ((persistedItem.Products as IList<Product>).Count == 0)
+        {
+          (fridge.Items as IList<Item>).Remove(persistedItem);
+        }
+      }
+
+      var updateRequest = await repo.UpdateAsync(fridge);
+
+      return updateRequest.Success ? await GetItems(fridge.Id) : null;
+    }
+
     public async Task<Item> TakeItem(BoughtItem item)
     {
-
       Fridge fridge = await RetrieveFridge(item.FridgeId);
-      Model.Item persistedItem = fridge.Items.FirstOrDefault(val => val.Name == item.ItemName);
+      Model.Item persistedItem = fridge.Items.FirstOrDefault(val => val.Name.ToLower() == item.ItemName.ToLower());
 
       //item not present.
       if (persistedItem == null) throw new Exception($"There is no {item.ItemName} in your fridge");
@@ -76,6 +120,11 @@ namespace HappyHappa.REST.DAL
           product.Amount = residue;
           neededItems = 0;
         }
+      }
+
+      if((persistedItem.Products as IList<Product>).Count == 0)
+      {
+        (fridge.Items as IList<Item>).Remove(persistedItem);
       }
 
       var updateRequest = await repo.UpdateAsync(fridge);
@@ -112,7 +161,7 @@ namespace HappyHappa.REST.DAL
     public async Task<User> GetUser()
     {
       var response = await repo.SingleAsync<User>(user => true);
-      if (!response.Success)
+      if (!response.Success && response.Errors.Any(error => error.Equals("no items found")))
       {
         await repo.AddAsync(new User
         {

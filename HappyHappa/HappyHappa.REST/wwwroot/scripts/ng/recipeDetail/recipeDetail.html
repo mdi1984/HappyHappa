@@ -3,7 +3,7 @@
 <div class="ingredients">
   <ul style="white-space: nowrap; padding-left: 0px;">
     <li style="list-style: none;display:inline; margin: 2px 0px 2px 0px;" data-ng-repeat="ingredient in model.Ingredients">
-      <span style="font-size: 85% !important;" class="label label-default">{{ingredient.Amount}} {{ingredient.Name}}</span>
+      <span style="font-size: 85% !important;" class="label" data-ng-class="{'label-success': isEnough(ingredient), 'label-danger': !isEnough(ingredient)}">{{ingredient.Amount}} {{ingredient.Name}}<span data-ng-show="!isEnough(ingredient)"> ({{difference(ingredient)}} missing)</span></span>
     </li>
   </ul>
 </div>
@@ -13,5 +13,5 @@
 </div>
 <div style="margin-top: 20px;">
   <input type="button" class="btn btn-default" value="Cancel" ui-sref="recipes"/>
-  <input type="button" class="btn btn-primary" value="Cook!" />
+  <input type="button" class="btn btn-primary" value="Cook!" ng-disabled="!enoughIngredients" data-ng-click="cook()" ui-sref="recipesDetailed(id)"/>
 </div>
