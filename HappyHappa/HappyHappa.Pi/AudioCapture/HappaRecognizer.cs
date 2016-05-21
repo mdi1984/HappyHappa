@@ -225,16 +225,23 @@ namespace HappyHappa.Pi.AudioCapture
         if (args.Result.Text.Contains(this.GetResourceString("NoCommand")) || args.Result.Text.Contains(this.GetResourceString("NewItemsOkayCommand")))
         {
           await this.SaveLastItem();
-          this.vm.DateUnderstood = string.Empty;
-          this.vm.ItemUnderstood = string.Empty;
+          await this.dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+          {
+            this.vm.DateUnderstood = string.Empty;
+            this.vm.ItemUnderstood = string.Empty;
+          });
+
           this.UpdateAppState(HappaState.WaitingForItemCreation);
         }
         else if (args.Result.Text.Contains(this.GetResourceString("CancelCommand")))
         {
           this.UpdateAppState(HappaState.WaitingForItemCreation);
-          this.vm.LastItem = null;
-          this.vm.DateUnderstood = string.Empty;
-          this.vm.ItemUnderstood = string.Empty;
+          await this.dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+          {
+            this.vm.LastItem = null;
+            this.vm.DateUnderstood = string.Empty;
+            this.vm.ItemUnderstood = string.Empty;
+          });
         }
         else
         {

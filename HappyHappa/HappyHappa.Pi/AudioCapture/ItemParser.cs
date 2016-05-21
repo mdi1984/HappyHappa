@@ -39,7 +39,7 @@ namespace HappyHappa.Pi.AudioCapture
       item = new SimpleItem
       {
         ItemName = name,
-        Amount = amount
+        Amount = Math.Abs(amount)
       };
       return true;
     }
@@ -52,6 +52,8 @@ namespace HappyHappa.Pi.AudioCapture
         case "Stück":
           return amount;
         case "Kilo":
+          return amount * 1000;
+        case "kg":
           return amount * 1000;
         case "Liter":
           return amount * 1000;

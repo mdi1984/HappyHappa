@@ -25,7 +25,7 @@ namespace HappyHappa.Pi
 
     public static string ToCharactersOnlyString(this string str)
     {
-      var vowels = "äöü";
+      var vowels = "äöüÄÖU";
       StringBuilder sb = new StringBuilder();
       foreach (char c in str)
       {
