@@ -176,6 +176,8 @@
     <Content Include="wwwroot\scripts\ng\general\navCtrl.js" />
     <Content Include="wwwroot\scripts\ng\home\home.html" />
     <Content Include="wwwroot\scripts\ng\intellicook\intellicook.html" />
+    <Content Include="wwwroot\scripts\ng\recipeDetail\recipeDetailCtrl.js" />
+    <Content Include="wwwroot\scripts\ng\recipeDetail\recipeDetail.html" />
     <Content Include="wwwroot\scripts\ng\recipes\recipes.html" />
     <Content Include="wwwroot\scripts\ng\recipes\recipeCtrl.js" />
     <Content Include="wwwroot\scripts\ng\settings\settings.html" />

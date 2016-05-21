@@ -16,7 +16,7 @@ namespace HappyHappa.REST.DAL
     {
       repo = repository;
     }
-    
+
     public async Task<Item> PutItem(BoughtItem newItem)
     {
       Product product = new Product
@@ -61,7 +61,7 @@ namespace HappyHappa.REST.DAL
       int neededItems = item.Amount;
       //take items
       var products = persistedItem.Products.OrderBy(product => product.ExpirationDate).ThenBy(product => product.ExpirationDate == null);
-      foreach(Product product in products.TakeWhile(product => neededItems >= 0))
+      foreach (Product product in products.TakeWhile(product => neededItems >= 0))
       {
         int residue = product.Amount - neededItems;
         //delete entry
@@ -134,9 +134,25 @@ namespace HappyHappa.REST.DAL
       return u;
     }
 
-    public async Task<IEnumerable<Item>> GetItems(string fridgeId)
+    public async Task<IEnumerable<Item>> GetItems(string fridgeId, bool abs = false)
     {
       Fridge fridge = await RetrieveFridge(fridgeId);
+      if (abs)
+      {
+        fridge.Items = fridge.Items.Select(item => new Item
+        {
+          Name = item.Name,
+          Products = new List<Product>
+          {
+            new Product
+            {
+              Amount = item.Products.Sum(product => product.Amount),
+              ExpirationDate = null
+            }
+          }
+        });
+      }
+
       return fridge.Items;
     }
 
