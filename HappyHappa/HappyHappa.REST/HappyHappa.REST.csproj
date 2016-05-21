@@ -155,6 +155,7 @@
     </Content>
     <Content Include="wwwroot\css\general.css" />
     <Content Include="wwwroot\img\loading.gif" />
+    <Content Include="wwwroot\img\logo.jpg" />
     <Content Include="wwwroot\img\star-empty.gif" />
     <Content Include="wwwroot\img\star-full.gif" />
     <Content Include="wwwroot\index.html">
