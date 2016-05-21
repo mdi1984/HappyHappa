@@ -129,7 +129,7 @@
   <data name="NewItemsDoneCommand" xml:space="preserve">
     <value>Fertig</value>
   </data>
-  <data name="newItemsOkayCommand" xml:space="preserve">
+  <data name="NewItemsOkayCommand" xml:space="preserve">
     <value>Okay</value>
   </data>
   <data name="NoCommand" xml:space="preserve">

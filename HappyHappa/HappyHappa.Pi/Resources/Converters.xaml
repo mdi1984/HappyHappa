@@ -1,0 +1,7 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:c="using:HappyHappa.Pi.Converters">
+  <c:EqualsToVisibilityConverter x:Key="EqualsToVisibilityConverter" />
+  <c:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
+</ResourceDictionary>

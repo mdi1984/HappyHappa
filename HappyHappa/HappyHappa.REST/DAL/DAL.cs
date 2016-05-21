@@ -96,7 +96,7 @@ namespace HappyHappa.REST.DAL
     public async Task<string> CreateFridge(Device device)
     {
       var response = await repo.SingleAsync<Fridge>(f => f.DeviceId == device.DeviceAddress);
-      if (response.Success) throw new Exception("Fridge already registered");
+      if (response.Success) return response.Data.Id;
 
       Fridge fridge = new Fridge
       {

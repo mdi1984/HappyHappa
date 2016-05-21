@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel.Resources.Core;
 using Windows.Foundation;
 using Windows.Globalization;
+using Windows.Globalization.DateTimeFormatting;
 using Windows.Media.SpeechRecognition;
 using Windows.UI.Core;
 using HappyHappa.Pi.Model;
@@ -34,22 +35,14 @@ namespace HappyHappa.Pi.AudioCapture
       this.commandMap = ResourceManager.Current.MainResourceMap.GetSubtree("Commands");
     }
 
-    //public HappaState AppState { get; set; }
-    private HappaState appState;
-
-    public HappaState AppState
-    {
-      get { return appState; }
-      set { appState = value; }
-    }
-
+    public HappaState AppState { get; set; }
 
 
     public async Task Initialize()
     {
       this.dispatcher = CoreWindow.GetForCurrentThread().Dispatcher;
       this.SetDebugMessage("HappaRecognizer Initialize");
-      this.AppState = HappaState.Initializing;
+      this.UpdateAppState(HappaState.Initializing);
       var permissionGained = await AudioCapturePermissions.RequestMicrophonePermission();
       if (permissionGained)
       {
@@ -169,8 +162,6 @@ namespace HappyHappa.Pi.AudioCapture
 
     private async void OnCmdRecognizerResult(SpeechContinuousRecognitionSession sender, SpeechContinuousRecognitionResultGeneratedEventArgs args)
     {
-      this.SetDebugMessage($"ContinuousRecognitionSession_ResultGenerated: {args.Result.Text}");
-
       if (args.Result.Text.Equals(this.GetResourceString("CancelCommand")))
       {
         await this.SwitchToIdleMode();
@@ -181,7 +172,7 @@ namespace HappyHappa.Pi.AudioCapture
       {
         if (args.Result.Text.Equals(this.GetResourceString("HeyHappaCommand")))
         {
-          this.AppState = HappaState.WaitingForCommand;
+          this.UpdateAppState(HappaState.WaitingForCommand);
         }
       }
       else if (this.AppState == HappaState.WaitingForCommand)
@@ -204,7 +195,7 @@ namespace HappyHappa.Pi.AudioCapture
       {
         if (args.Result.Text.Contains(this.GetResourceString("NewItemsOkayCommand")))
         {
-          this.AppState = HappaState.WaitingForExpirationDate;
+          this.UpdateAppState(HappaState.WaitingForExpirationDate);
           this.SetDebugMessage("expiration date?");
         }
         else if (args.Result.Text.Contains(this.GetResourceString("CancelCommand")))
@@ -233,19 +224,30 @@ namespace HappyHappa.Pi.AudioCapture
       {
         if (args.Result.Text.Contains(this.GetResourceString("NoCommand")) || args.Result.Text.Contains(this.GetResourceString("NewItemsOkayCommand")))
         {
-          await this.vm.SaveLastItem();
-          this.AppState = HappaState.WaitingForItemCreation;
+          await this.SaveLastItem();
+          this.vm.DateUnderstood = string.Empty;
+          this.vm.ItemUnderstood = string.Empty;
+          this.UpdateAppState(HappaState.WaitingForItemCreation);
         }
         else if (args.Result.Text.Contains(this.GetResourceString("CancelCommand")))
         {
-          this.AppState = HappaState.WaitingForItemCreation;
+          this.UpdateAppState(HappaState.WaitingForItemCreation);
           this.vm.LastItem = null;
+          this.vm.DateUnderstood = string.Empty;
+          this.vm.ItemUnderstood = string.Empty;
         }
         else
         {
           DateTime expirationDate;
           // TODO if time left...: Format Provider
-          var parseResult = DateTime.TryParse(args.Result.Text, out expirationDate);
+          var dateStr = args.Result.Text;
+          var segments = dateStr.Split('.');
+          if (segments.Length >= 3)
+          {
+            dateStr = $"{segments[1]}.{segments[0]}.{segments[2]}";
+          }
+
+          var parseResult = DateTime.TryParse(dateStr, out expirationDate);
           if (parseResult)
           {
             await this.dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
@@ -269,7 +271,13 @@ namespace HappyHappa.Pi.AudioCapture
         {
           if (this.vm.LastItemToRemove != null)
           {
-            await this.vm.RemoveLastItem();
+            await this.dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+            {
+              await this.vm.RemoveLastItem();
+              this.vm.LastItemToRemove = null;
+              this.vm.ItemUnderstood = string.Empty;
+              this.UpdateAppState(HappaState.WaitingForCommand);
+            });
           }
         }
         else
@@ -306,7 +314,7 @@ namespace HappyHappa.Pi.AudioCapture
       {
         await this.cmdRecognizer.ContinuousRecognitionSession.StopAsync();
         await itemRecognizer.ContinuousRecognitionSession.StartAsync();
-        this.AppState = delete ? HappaState.WaitingForItemDeletion : HappaState.WaitingForItemCreation;
+        this.UpdateAppState(delete ? HappaState.WaitingForItemDeletion : HappaState.WaitingForItemCreation);
       }
       catch (Exception ex)
       {
@@ -321,7 +329,7 @@ namespace HappyHappa.Pi.AudioCapture
       {
         await this.itemRecognizer.ContinuousRecognitionSession.StopAsync();
         await this.cmdRecognizer.ContinuousRecognitionSession.StartAsync();
-        this.AppState = HappaState.WaitingForCommand;
+        this.UpdateAppState(HappaState.WaitingForCommand);
       }
       catch (Exception ex)
       {
@@ -333,7 +341,7 @@ namespace HappyHappa.Pi.AudioCapture
     {
       try
       {
-        this.AppState = HappaState.WaitingForHeyHappa;
+        this.UpdateAppState(HappaState.WaitingForHeyHappa);
         await this.itemRecognizer.ContinuousRecognitionSession.StopAsync();
         await this.cmdRecognizer.ContinuousRecognitionSession.StartAsync();
       }
@@ -345,8 +353,7 @@ namespace HappyHappa.Pi.AudioCapture
 
     private async Task WaitForInitialCommand()
     {
-      this.AppState = HappaState.WaitingForHeyHappa;
-
+      this.UpdateAppState(HappaState.WaitingForHeyHappa);
       if (this.cmdRecognizer.State != SpeechRecognizerState.Idle)
         return;
 
@@ -369,13 +376,13 @@ namespace HappyHappa.Pi.AudioCapture
       });
 
       if (args.State == SpeechRecognizerState.Idle &&
-          (this.appState == HappaState.WaitingForCommand || this.appState == HappaState.WaitingForHeyHappa))
+          (this.AppState == HappaState.WaitingForCommand || this.AppState == HappaState.WaitingForHeyHappa))
       {
         var prevState = this.AppState;
-        this.AppState = HappaState.Initializing;
+        this.UpdateAppState(HappaState.Initializing);
         await this.InitializeCmdRecognizer();
         await this.cmdRecognizer.ContinuousRecognitionSession.StartAsync();
-        this.AppState = prevState;
+        this.UpdateAppState(prevState);
       }
     }
 
@@ -389,10 +396,10 @@ namespace HappyHappa.Pi.AudioCapture
       if (args.State == SpeechRecognizerState.Idle && (this.AppState == HappaState.WaitingForItemCreation || this.AppState == HappaState.WaitingForExpirationDate))
       {
         var prevState = this.AppState;
-        this.AppState = HappaState.Initializing;
+        this.UpdateAppState(HappaState.Initializing);
         await this.InitializeItemRecognizer();
         await this.itemRecognizer.ContinuousRecognitionSession.StartAsync();
-        this.AppState = prevState;
+        this.UpdateAppState(prevState);
       }
     }
 
@@ -407,6 +414,26 @@ namespace HappyHappa.Pi.AudioCapture
     private string GetResourceString(string key)
     {
       return this.commandMap.GetValue(key, this.resContext).ValueAsString;
+    }
+
+    private async void UpdateAppState(HappaState state)
+    {
+      this.AppState = state;
+      await this.dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+      {
+        this.vm.UpdateState(state);
+      });
+    }
+
+    private async Task SaveLastItem()
+    {
+      if (this.vm.LastItem != null)
+      {
+        await this.dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+        {
+          await this.vm.SaveLastItem();
+        });
+      }
     }
   }
 }

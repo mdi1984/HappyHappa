@@ -1,0 +1,72 @@
+﻿<Page
+    x:Class="HappyHappa.Pi.Views.InventoryPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:HappyHappa.Pi"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+  <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Margin="35">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="*" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
+
+    <TextBlock Grid.Row="0" Text="Hey, Talk to me!" FontSize="36" HorizontalAlignment="Center" />
+    <TextBlock Grid.Row="1" Text="Optionen:" />
+    <ItemsControl Grid.Row="2" ItemsSource="{Binding AvailableCommands}" >
+      <ItemsControl.ItemTemplate>
+        <DataTemplate>
+          <TextBlock>
+            <Run Text="- "/>
+            <Run Text="{Binding}" />
+          </TextBlock>
+        </DataTemplate>
+      </ItemsControl.ItemTemplate>
+    </ItemsControl>
+
+    <Grid Grid.Row="3" Visibility="{Binding State, Converter={StaticResource EqualsToVisibilityConverter}, ConverterParameter='WaitingForItemCreation'}" Margin="0 35">
+      <TextBlock>
+        <Run Text="Verstanden: " />
+        <Run FontWeight="Bold" Text="{Binding ItemUnderstood}" />
+      </TextBlock>
+    </Grid>
+
+    <Grid Grid.Row="3" Visibility="{Binding State, Converter={StaticResource EqualsToVisibilityConverter}, ConverterParameter='WaitingForItemDeletion'}" Margin="0 35">
+      <TextBlock>
+        <Run Text="Verstanden: " />
+        <Run FontWeight="Bold" Text="{Binding ItemUnderstood}" />
+      </TextBlock>
+    </Grid>
+
+    <Grid Grid.Row="3" Visibility="{Binding State, Converter={StaticResource EqualsToVisibilityConverter}, ConverterParameter='WaitingForExpirationDate'}" Margin="0 35">
+      <StackPanel>
+        <TextBlock>
+        <Run Text="Verstanden: " />
+        <Run FontWeight="Bold" Text="{Binding ItemUnderstood}" />
+        </TextBlock>
+
+        <TextBlock>
+        <Run Text="Ablaufdatum: " />
+        <Run FontWeight="Bold" Text="{Binding DateUnderstood}" />
+        </TextBlock>
+      </StackPanel>
+    </Grid>
+
+    <TextBlock Grid.Row="4" Visibility="{Binding LastSavedItem, Converter={StaticResource NullToVisibilityConverter}}"> 
+      <Run Text="Zuletzt gespeichert:" />
+      <Run Text="{Binding LastSavedItem.Amount}" />
+      <Run Text="{Binding LastSavedItem.ItemName}" />
+      <Run Text="{Binding LastSavedItem.ExpirationDate}" />
+    </TextBlock>
+
+    <TextBlock Grid.Row="5">
+      <Run Text="Debug Info:" />
+      <Run Text="{Binding DebugMessage}" />
+    </TextBlock>
+  </Grid>
+</Page>

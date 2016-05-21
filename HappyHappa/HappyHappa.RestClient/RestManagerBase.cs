@@ -56,7 +56,7 @@ namespace HappyHappa.RestClient
              Encoding.UTF8,
              "application/json"));
 
-        return new RestResponse(responseMessage);
+        return new RestResponse(responseMessage, await responseMessage.Content.ReadAsStringAsync());
       }
     }
   }
