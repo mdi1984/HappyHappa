@@ -15,5 +15,10 @@ namespace HappyHappa.REST.DAL
     Task<User> SetUser(User user);
 
     Task<IEnumerable<Item>> GetItems(string fridgeId);
+
+    Task<Recipe> GetRecipe(string recipeId);
+    Task<IEnumerable<Recipe>> GetRecipes();
+    Task<Recipe> SaveRecipe(Recipe recipe);
+
   }
 }

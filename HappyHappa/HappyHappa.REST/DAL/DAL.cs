@@ -139,5 +139,29 @@ namespace HappyHappa.REST.DAL
       Fridge fridge = await RetrieveFridge(fridgeId);
       return fridge.Items;
     }
+
+    public async Task<Recipe> GetRecipe(string recipeId)
+    {
+      Recipe recipe = (await GetRecipes()).FirstOrDefault(r => r.Id.Equals(recipeId));
+      if (recipe == null) throw new Exception("Recipe not found");
+
+      return recipe;
+    }
+
+    public async Task<IEnumerable<Recipe>> GetRecipes()
+    {
+      var recipeRequest = await repo.AllAsync<Recipe>();
+      if (!recipeRequest.Success) throw new Exception("Recipes couldn't be retrieved");
+
+      return recipeRequest.Data;
+    }
+
+    public async Task<Recipe> SaveRecipe(Recipe recipe)
+    {
+      var addResponse = await repo.AddAsync(recipe);
+      if (!addResponse.Success) throw new Exception("Recipe couldn't be saved");
+
+      return addResponse.Data;
+    }
   }
 }

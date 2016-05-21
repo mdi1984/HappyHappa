@@ -187,10 +187,12 @@
     <Compile Include="Controllers\AbstractController.cs" />
     <Compile Include="Controllers\FridgeController.cs" />
     <Compile Include="Controllers\ItemController.cs" />
+    <Compile Include="Controllers\RecipeController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="DAL\DAL.cs" />
     <Compile Include="DAL\DummyContext.cs" />
     <Compile Include="DAL\Model\Fridge.cs" />
+    <Compile Include="DAL\Model\Ingredient.cs" />
     <Compile Include="DAL\Model\Item.cs" />
     <Compile Include="DAL\Model\Product.cs" />
     <Compile Include="DAL\Model\Recipe.cs" />
