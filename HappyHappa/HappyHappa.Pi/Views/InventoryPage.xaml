@@ -16,7 +16,7 @@
       <RowDefinition Height="Auto" />
     </Grid.RowDefinitions>
 
-    <TextBlock Grid.Row="0" Text="Hey, Talk to me!" FontSize="36" HorizontalAlignment="Center" />
+    <TextBlock Grid.Row="0" Text="Hey, Talk to me!" FontSize="36" HorizontalAlignment="Left" />
     <TextBlock Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Bottom">
       <Run Text="DeviceID:" />
       <Run Text="{Binding DeviceId}" />
@@ -68,9 +68,19 @@
       <Run Text="{Binding LastSavedItem.ExpirationDate}" />
     </TextBlock>
 
-    <TextBlock Grid.Row="5">
-      <Run Text="Debug Info:" />
-      <Run Text="{Binding DebugMessage}" />
-    </TextBlock>
+    <StackPanel Grid.Row="5">
+      <TextBlock>
+        <Run Text="Debug Info:" />
+        <Run Text="{Binding DebugMessage}" />
+      </TextBlock>
+      <TextBlock>
+        <Run Text="CommandRecognizerState:" />
+        <Run Text="{Binding CmdRecognizerState}" />
+      </TextBlock>
+      <TextBlock>
+        <Run Text="ItemRecognizerState:" />
+        <Run Text="{Binding ItemRecognizerState}" />
+      </TextBlock>
+    </StackPanel>
   </Grid>
 </Page>
