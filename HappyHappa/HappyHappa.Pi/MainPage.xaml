@@ -7,32 +7,17 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-  <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-      <TextBlock Text="Heyho" />
-      <TextBlock>
-        <Run Text="Command Rec. State: "/>
-        <Run Text="{Binding CmdRecognizerState}" />
-      </TextBlock>
-
-      <TextBlock>
-        <Run Text="Item Rec. State: "/>
-        <Run Text="{Binding ItemRecognizerState}" />
-      </TextBlock>
-
-      <TextBlock>
-        <Run Text="Item understood: "/>
-        <Run Text="{Binding ItemUnderstood}" />
-      </TextBlock>
-
-      <TextBlock>
-        <Run Text="Expirationdate understood: "/>
-        <Run Text="{Binding DateUnderstood}" />
-      </TextBlock>
-      <TextBlock>
-        <Run Text="Debug Message: "/>
-        <Run Text="{Binding DebugMessage}" />
-      </TextBlock>
-    </StackPanel>
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Frame x:Name="MainFrame" x:FieldModifier="Public">
+      <Frame.ContentTransitions>
+        <TransitionCollection>
+          <NavigationThemeTransition>
+            <NavigationThemeTransition.DefaultNavigationTransitionInfo>
+              <EntranceNavigationTransitionInfo/>
+            </NavigationThemeTransition.DefaultNavigationTransitionInfo>
+          </NavigationThemeTransition>
+        </TransitionCollection>
+      </Frame.ContentTransitions>
+    </Frame>
   </Grid>
 </Page>

@@ -13,6 +13,8 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using HappyHappa.Pi.ViewModels;
+using GalaSoft.MvvmLight.Messaging;
+using HappyHappa.Pi.Messages;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -26,22 +28,26 @@ namespace HappyHappa.Pi.Views
     public LoginPage()
     {
       this.InitializeComponent();
+      this.Loaded += LoginPage_Loaded;
     }
 
-    protected override async void OnNavigatedTo(NavigationEventArgs e)
+    private async void LoginPage_Loaded(object sender, RoutedEventArgs e)
     {
       var vm = new LoginViewModel();
+      this.DataContext = vm;
+
       if (!string.IsNullOrEmpty(vm.ClientId))
       {
+        Messenger.Default.Send(new NavigateToMessage(typeof (InventoryPage)));
         // redirect to inventory page
       }
       else
       {
         // register new device and set clientId
         var result = await vm.TryRegisterDevice();
+        vm.SaveClientId(result.Message.RemoveSpecialCharacters());
+        Messenger.Default.Send(new NavigateToMessage(typeof(InventoryPage)));
       }
-
-      base.OnNavigatedTo(e);
     }
   }
 }

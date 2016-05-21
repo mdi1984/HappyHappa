@@ -8,6 +8,7 @@ using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Globalization;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -15,7 +16,10 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using GalaSoft.MvvmLight.Messaging;
+using HappyHappa.Pi.Messages;
 using HappyHappa.Pi.Views;
+using HappyHappa.Pi;
 
 namespace HappyHappa.Pi
 {
@@ -24,6 +28,8 @@ namespace HappyHappa.Pi
   /// </summary>
   sealed partial class App : Application
   {
+    public static string ClientId { get; set; }
+
     /// <summary>
     /// Initializes the singleton application object.  This is the first line of authored code
     /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -47,16 +53,19 @@ namespace HappyHappa.Pi
         this.DebugSettings.EnableFrameRateCounter = true;
       }
 #endif
-      Frame rootFrame = Window.Current.Content as Frame;
+
+      Messenger.Default.Register<NavigateToMessage>(this, this.NavigateTo);
+      //Frame rootFrame = Window.Current.Content as Frame;
+      var mainPage = Window.Current.Content as MainPage;
 
       // Do not repeat app initialization when the Window already has content,
       // just ensure that the window is active
-      if (rootFrame == null)
+      if (mainPage == null)
       {
         // Create a Frame to act as the navigation context and navigate to the first page
-        rootFrame = new Frame();
+        mainPage = new MainPage();
 
-        rootFrame.NavigationFailed += OnNavigationFailed;
+        mainPage.MainFrame.NavigationFailed += OnNavigationFailed;
 
         if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
         {
@@ -64,21 +73,27 @@ namespace HappyHappa.Pi
         }
 
         // Place the frame in the current Window
-        Window.Current.Content = rootFrame;
+        Window.Current.Content = mainPage;
       }
 
       if (e.PrelaunchActivated == false)
       {
-        if (rootFrame.Content == null)
+        if (mainPage.MainFrame.Content == null)
         {
           // When the navigation stack isn't restored navigate to the first page,
           // configuring the new page by passing required information as a navigation
           // parameter
-          rootFrame.Navigate(typeof(LoginPage), e.Arguments);
+          mainPage.MainFrame.Navigate(typeof(LoginPage), e.Arguments);
         }
         // Ensure the current window is active
         Window.Current.Activate();
       }
+    }
+
+    private void NavigateTo(NavigateToMessage msg)
+    {
+      var mainPage = (MainPage)Window.Current.Content;
+      mainPage.MainFrame.Navigate(typeof(InventoryPage));
     }
 
     /// <summary>

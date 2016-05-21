@@ -25,15 +25,30 @@ namespace HappyHappa.Pi
 
     public static string ToCharactersOnlyString(this string str)
     {
+      var vowels = "äöüÄÖU";
       StringBuilder sb = new StringBuilder();
       foreach (char c in str)
       {
-        if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'))
+        if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || vowels.Contains(c.ToString()))
         {
           sb.Append(c);
         }
       }
       return sb.ToString();
     }
+
+    public static string RemoveSpecialCharacters(this string str)
+    {
+      StringBuilder sb = new StringBuilder();
+      foreach (char c in str)
+      {
+        if ((c >= '0' && c <= '9') || (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || c == '.' || c == '_')
+        {
+          sb.Append(c);
+        }
+      }
+      return sb.ToString();
+    }
+
   }
 }

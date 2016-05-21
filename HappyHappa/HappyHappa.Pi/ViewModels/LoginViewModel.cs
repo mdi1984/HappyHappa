@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Security.ExchangeActiveSyncProvisioning;
+using Windows.Storage;
 using GalaSoft.MvvmLight;
 using HappyHappa.RestClient;
 
@@ -11,19 +12,41 @@ namespace HappyHappa.Pi.ViewModels
 {
   public class LoginViewModel : ViewModelBase
   {
-    public LoginViewModel()
-    {
-      var localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
-
-      this.ClientId = localSettings.Values["ClientID"] as string;
-    }
 
     private string clientId;
+    private ApplicationDataContainer localSettings;
+    public LoginViewModel()
+    {
+      this.localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+
+      this.ClientId = localSettings.Values["ClientID"] as string;
+      if (string.IsNullOrEmpty(this.ClientId))
+      {
+        this.LoginMessage = "Device not registered yet - establishing connection to registration service";
+      }
+      else
+      {
+        this.LoginMessage = "Loading...";
+      }
+    }
+
+    private string loginMessage;
+
+    public string LoginMessage
+    {
+      get { return this.loginMessage; }
+      set { this.Set(ref loginMessage, value); }
+    }
+
 
     public string ClientId
     {
       get { return this.clientId; }
-      set { this.Set(ref clientId, value); }
+      set
+      {
+        this.Set(ref clientId, value);
+        App.ClientId = value;
+      }
     }
 
     public async Task<RestResponse> TryRegisterDevice()
@@ -36,7 +59,17 @@ namespace HappyHappa.Pi.ViewModels
       };
 
       var registrationResult = await restManager.PostWithJsonPayload("http://localhost:5039/api/fridge/", req);
+      if (registrationResult.StatusCode != System.Net.HttpStatusCode.OK)
+      {
+        this.LoginMessage = "Unable to reach service";
+      }
       return registrationResult;
+    }
+
+    public void SaveClientId(string clientId)
+    {
+      this.ClientId = clientId;
+      this.localSettings.Values["ClientID"] = clientId;
     }
   }
 }
