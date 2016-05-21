@@ -242,9 +242,9 @@ namespace HappyHappa.REST.DAL
 
     private double evaluateRecipe(Recipe recipe, IEnumerable<Item> items)
     {
-      double weightExpiration = 0.48;
-      double weightPresentItems = 0.48;
-      double weightRating = 0.04;
+      double weightExpiration = 0.73;
+      double weightPresentItems = 0.20;
+      double weightRating = 0.07;
 
       IList<Ingredient> ingredients = recipe.Ingredients as IList<Ingredient>;
       int maxIngredients = ingredients.Count;
@@ -252,7 +252,7 @@ namespace HappyHappa.REST.DAL
       foreach(Ingredient ingredient in ingredients)
       {
         var presentItem = items.FirstOrDefault(item => item.Name == ingredient.Name);
-        if (presentItem != null && presentItem.GetTotalAmount() > ingredient.Amount) presentIngredients++;
+        if (presentItem != null && presentItem.GetTotalAmount() >= ingredient.Amount) presentIngredients++;
       }
       double presentIngredientsQuota = maxIngredients == 0 ? 0: presentIngredients / (double) maxIngredients;
 

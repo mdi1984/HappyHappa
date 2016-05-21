@@ -1,10 +1,10 @@
-﻿<h1>Recipes</h1>
+﻿<h1>Rezepte</h1>
 <img src="img/loading.gif" data-ng-hide="hideLoadingIcon" style=" display:block;margin:auto;" />
 <h2>{{model.Name}}</h2>
 <div class="ingredients">
   <ul style="padding-left: 0px;">
     <li style="list-style: none;display:inline; margin: 2px 2px 2px 2px;" data-ng-repeat="ingredient in model.Ingredients">
-      <span style="font-size: 85% !important;" class="label" data-ng-class="{'label-success': isEnough(ingredient), 'label-danger': !isEnough(ingredient)}">{{ingredient.Amount}} {{ingredient.Name}}<span data-ng-show="!isEnough(ingredient)"> ({{difference(ingredient)}} missing)</span></span>
+      <span style="font-size: 85% !important;" class="label" data-ng-class="{'label-success': isEnough(ingredient), 'label-danger': !isEnough(ingredient)}">{{ingredient.Amount}} {{ingredient.Name}}<span data-ng-show="!isEnough(ingredient)"> ({{difference(ingredient)}} fehlen)</span></span>
     </li>
   </ul>
 </div>
@@ -18,5 +18,5 @@
 <div class="description" ng-bind-html="model.Description">
 </div>
 <div style="margin-top: 20px;">
-  <input type="button" class="btn btn-primary" value="Cook!" ng-disabled="!enoughIngredients" data-ng-click="cook()" ui-sref="recipesDetailed(id)"/>
+  <input type="button" class="btn btn-primary" value="Kochen!" ng-disabled="!enoughIngredients" data-ng-click="cook()" ui-sref="recipesDetailed(id)"/>
 </div>
