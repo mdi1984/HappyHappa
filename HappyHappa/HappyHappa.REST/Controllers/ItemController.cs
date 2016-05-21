@@ -15,6 +15,11 @@ namespace HappyHappa.REST.Controllers
       return await Dal.GetItems(id);
     }
 
+    public async Task<IEnumerable<Item>> Get(string id, [FromUri] bool abs)
+    {
+      return await Dal.GetItems(id, abs);
+    }
+
     // PUT api/<controller>
     public async Task<Item> Put([FromBody] BoughtItem item)
     {

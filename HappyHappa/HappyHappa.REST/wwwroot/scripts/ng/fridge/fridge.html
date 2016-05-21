@@ -1,1 +1,22 @@
 ﻿<h1>Fridge</h1>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><b>Name</b></th>
+      <th>Products</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr data-ng-repeat="data in model">
+      <td style="width: 200px">{{data.Name}}</td>
+      <td>
+        <table class="table">
+          <tr data-ng-repeat="product in data.Products">
+            <td style="width: 120px;"><span style="font-style: italic;">Amount:</span> {{product.Amount}}</td>
+            <td><span style="font-style: italic;">Expiring:</span> {{product.ExpirationDate | date: "dd.MM.yyyy"}}</td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </tbody>
+</table>

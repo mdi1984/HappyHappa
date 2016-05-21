@@ -172,10 +172,14 @@
     <Content Include="wwwroot\scripts\lib\jquery-2.2.4.min.js" />
     <Content Include="wwwroot\scripts\ng\app.js" />
     <Content Include="wwwroot\scripts\ng\fridge\fridge.html" />
+    <Content Include="wwwroot\scripts\ng\fridge\fridgeCtrl.js" />
     <Content Include="wwwroot\scripts\ng\general\navCtrl.js" />
     <Content Include="wwwroot\scripts\ng\home\home.html" />
     <Content Include="wwwroot\scripts\ng\intellicook\intellicook.html" />
+    <Content Include="wwwroot\scripts\ng\recipeDetail\recipeDetailCtrl.js" />
+    <Content Include="wwwroot\scripts\ng\recipeDetail\recipeDetail.html" />
     <Content Include="wwwroot\scripts\ng\recipes\recipes.html" />
+    <Content Include="wwwroot\scripts\ng\recipes\recipeCtrl.js" />
     <Content Include="wwwroot\scripts\ng\settings\settings.html" />
     <Content Include="wwwroot\scripts\ng\settings\settingsCtrl.js" />
     <Content Include="wwwroot\scripts\ng\svc\happyhappaSvc.js" />
@@ -186,10 +190,12 @@
     <Compile Include="Controllers\AbstractController.cs" />
     <Compile Include="Controllers\FridgeController.cs" />
     <Compile Include="Controllers\ItemController.cs" />
+    <Compile Include="Controllers\RecipeController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="DAL\DAL.cs" />
     <Compile Include="DAL\DummyContext.cs" />
     <Compile Include="DAL\Model\Fridge.cs" />
+    <Compile Include="DAL\Model\Ingredient.cs" />
     <Compile Include="DAL\Model\Item.cs" />
     <Compile Include="DAL\Model\Product.cs" />
     <Compile Include="DAL\Model\Recipe.cs" />

@@ -16,7 +16,7 @@ namespace HappyHappa.REST.DAL
     {
       repo = repository;
     }
-    
+
     public async Task<Item> PutItem(BoughtItem newItem)
     {
       Product product = new Product
@@ -61,7 +61,7 @@ namespace HappyHappa.REST.DAL
       int neededItems = item.Amount;
       //take items
       var products = persistedItem.Products.OrderBy(product => product.ExpirationDate).ThenBy(product => product.ExpirationDate == null);
-      foreach(Product product in products.TakeWhile(product => neededItems >= 0))
+      foreach (Product product in products.TakeWhile(product => neededItems >= 0))
       {
         int residue = product.Amount - neededItems;
         //delete entry
@@ -134,10 +134,50 @@ namespace HappyHappa.REST.DAL
       return u;
     }
 
-    public async Task<IEnumerable<Item>> GetItems(string fridgeId)
+    public async Task<IEnumerable<Item>> GetItems(string fridgeId, bool abs = false)
     {
       Fridge fridge = await RetrieveFridge(fridgeId);
+      if (abs)
+      {
+        fridge.Items = fridge.Items.Select(item => new Item
+        {
+          Name = item.Name,
+          Products = new List<Product>
+          {
+            new Product
+            {
+              Amount = item.Products.Sum(product => product.Amount),
+              ExpirationDate = null
+            }
+          }
+        });
+      }
+
       return fridge.Items;
+    }
+
+    public async Task<Recipe> GetRecipe(string recipeId)
+    {
+      Recipe recipe = (await GetRecipes()).FirstOrDefault(r => r.Id.Equals(recipeId));
+      if (recipe == null) throw new Exception("Recipe not found");
+
+      return recipe;
+    }
+
+    public async Task<IEnumerable<Recipe>> GetRecipes()
+    {
+      var recipeRequest = await repo.AllAsync<Recipe>();
+      if (!recipeRequest.Success) throw new Exception("Recipes couldn't be retrieved");
+
+      return recipeRequest.Data;
+    }
+
+    public async Task<Recipe> SaveRecipe(Recipe recipe)
+    {
+      var addResponse = await repo.AddAsync(recipe);
+      if (!addResponse.Success) throw new Exception("Recipe couldn't be saved");
+
+      return addResponse.Data;
     }
   }
 }
