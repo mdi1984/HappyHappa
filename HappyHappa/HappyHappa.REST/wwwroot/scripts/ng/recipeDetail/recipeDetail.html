@@ -1,4 +1,5 @@
 ﻿<h1>Recipes</h1>
+<img src="img/loading.gif" data-ng-hide="hideLoadingIcon" style=" display:block;margin:auto;" />
 <h2>{{model.Name}}</h2>
 <div class="ingredients">
   <ul style="white-space: nowrap; padding-left: 0px;">
@@ -7,11 +8,16 @@
     </li>
   </ul>
 </div>
+<div style="margin-top: 5px;">
+  <span data-ng-repeat="i in [1, 2, 3, 4, 5]">
+    <img data-ng-show="model.Rating >= i" src="img/star-full.gif" style="width:20px;" />
+    <img data-ng-show="model.Rating < i" src="img/star-empty.gif" style="width:20px;" />
+  </span>
+</div>
 <hr />
 <div class="description">
   {{model.Description}}
 </div>
 <div style="margin-top: 20px;">
-  <input type="button" class="btn btn-default" value="Cancel" ui-sref="recipes"/>
   <input type="button" class="btn btn-primary" value="Cook!" ng-disabled="!enoughIngredients" data-ng-click="cook()" ui-sref="recipesDetailed(id)"/>
 </div>

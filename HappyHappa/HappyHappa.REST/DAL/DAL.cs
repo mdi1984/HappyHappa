@@ -228,5 +228,57 @@ namespace HappyHappa.REST.DAL
 
       return addResponse.Data;
     }
+
+    public async Task<IEnumerable<Recipe>> GetMostMatchingRecipes(string fridgeId)
+    {
+      var items = await GetItems(fridgeId);
+      var recipes = await GetRecipes();
+
+      var test = recipes.Select(recipe => new EvaluatedRecipe { Recipe = recipe, Evaluation = evaluateRecipe(recipe, items) }).OrderByDescending(recipe => recipe.Evaluation);
+      return test
+                    .Take(5)
+                    .Select(recipe => recipe.Recipe);
+    }
+
+    private double evaluateRecipe(Recipe recipe, IEnumerable<Item> items)
+    {
+      double weightExpiration = 0.48;
+      double weightPresentItems = 0.48;
+      double weightRating = 0.04;
+
+      IList<Ingredient> ingredients = recipe.Ingredients as IList<Ingredient>;
+      int maxIngredients = ingredients.Count;
+      int presentIngredients = 0;
+      foreach(Ingredient ingredient in ingredients)
+      {
+        var presentItem = items.FirstOrDefault(item => item.Name == ingredient.Name);
+        if (presentItem != null && presentItem.GetTotalAmount() > ingredient.Amount) presentIngredients++;
+      }
+      double presentIngredientsQuota = maxIngredients == 0 ? 0: presentIngredients / (double) maxIngredients;
+
+      long minExpiration = DateTime.MinValue.Ticks;
+      long maxExpiration = DateTime.MaxValue.Ticks;
+      minExpiration = items.Select(item => item.Products.Where(product => product.ExpirationDate != null).Min(product => product.ExpirationDate)).Min().Value.Ticks;
+      maxExpiration = items.Select(item => item.Products.Where(product => product.ExpirationDate != null).Max(product => product.ExpirationDate)).Max().Value.Ticks;
+      var minExpirations = new List<long>();
+      try {
+        minExpirations = items.Where(item => ingredients.Any(ing => ing.Name == item.Name))
+                                .Select(item => item.Products.Where(product => product.ExpirationDate != null).Min(product => product.ExpirationDate).Value.Ticks).ToList();
+      }catch(Exception){ }
+      double expirationQuota = 1;
+      if (minExpirations.Any())
+      {
+        foreach(long expirationValue in minExpirations)
+        {
+          expirationQuota *= (int) ((expirationValue - maxExpiration) * 100 / (minExpiration - maxExpiration) / 100);
+        }
+      }
+      else
+      {
+        expirationQuota = 0;
+      }
+      double result = weightPresentItems * presentIngredientsQuota + expirationQuota * weightExpiration + weightRating * recipe.Rating / 5;
+      return result;
+    }
   }
 }

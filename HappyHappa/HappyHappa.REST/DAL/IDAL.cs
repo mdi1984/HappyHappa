@@ -21,5 +21,6 @@ namespace HappyHappa.REST.DAL
     Task<IEnumerable<Recipe>> GetRecipes();
     Task<Recipe> SaveRecipe(Recipe recipe);
 
+    Task<IEnumerable<Recipe>> GetMostMatchingRecipes(string fridgeId);
   }
 }

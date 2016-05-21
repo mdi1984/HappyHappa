@@ -5,6 +5,7 @@ app.controller("recipeDetailCtrl", ["$http", "$state", "$scope", "$stateParams",
   $scope.items = []
   $scope.enoughIngredients = true;
   $scope.id = $stateParams.id;
+  $scope.hideLoadingIcon = false;
 
   var fridgeSecret;
 
@@ -20,6 +21,7 @@ app.controller("recipeDetailCtrl", ["$http", "$state", "$scope", "$stateParams",
           $scope.items[item.Name.toLowerCase()] = item.Products[0].Amount;
         }
         $scope.enoughIngredients = true;
+        $scope.hideLoadingIcon = true;
       });
     })
     
