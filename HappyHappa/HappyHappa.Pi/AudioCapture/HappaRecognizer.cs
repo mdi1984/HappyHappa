@@ -127,12 +127,6 @@ namespace HappyHappa.Pi.AudioCapture
         this.itemRecognizer.StateChanged += ItemRecognizerStateChanged;
         this.itemRecognizer.ContinuousRecognitionSession.Completed += ContinuousRecognitionSession_Completed; ;
         this.itemRecognizer.ContinuousRecognitionSession.ResultGenerated += OnItemRecognizerResult;
-
-        this.itemRecognizer.Timeouts.InitialSilenceTimeout = new TimeSpan(0);
-        this.itemRecognizer.Timeouts.BabbleTimeout = new TimeSpan(0);
-        this.itemRecognizer.Timeouts.EndSilenceTimeout = new TimeSpan(0);
-        this.itemRecognizer.ContinuousRecognitionSession.AutoStopSilenceTimeout =
-          new TimeSpan(0);
       }
       catch (Exception ex)
       {
@@ -319,9 +313,9 @@ namespace HappyHappa.Pi.AudioCapture
     {
       try
       {
+        this.UpdateAppState(delete ? HappaState.WaitingForItemDeletion : HappaState.WaitingForItemCreation);
         await this.cmdRecognizer.ContinuousRecognitionSession.StopAsync();
         await itemRecognizer.ContinuousRecognitionSession.StartAsync();
-        this.UpdateAppState(delete ? HappaState.WaitingForItemDeletion : HappaState.WaitingForItemCreation);
       }
       catch (Exception ex)
       {
@@ -334,9 +328,9 @@ namespace HappyHappa.Pi.AudioCapture
     {
       try
       {
+        this.UpdateAppState(HappaState.WaitingForCommand);
         await this.itemRecognizer.ContinuousRecognitionSession.StopAsync();
         await this.cmdRecognizer.ContinuousRecognitionSession.StartAsync();
-        this.UpdateAppState(HappaState.WaitingForCommand);
       }
       catch (Exception ex)
       {
@@ -400,7 +394,7 @@ namespace HappyHappa.Pi.AudioCapture
         this.vm.ItemRecognizerState = args.State.ToString();
       });
 
-      if (args.State == SpeechRecognizerState.Idle && (this.AppState == HappaState.WaitingForItemCreation || this.AppState == HappaState.WaitingForExpirationDate))
+      if (args.State == SpeechRecognizerState.Idle && (this.AppState == HappaState.WaitingForItemCreation || this.AppState == HappaState.WaitingForExpirationDate || this.AppState == HappaState.WaitingForItemDeletion))
       {
         var prevState = this.AppState;
         this.UpdateAppState(HappaState.Initializing);
